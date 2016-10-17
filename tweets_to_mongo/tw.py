@@ -6,6 +6,7 @@ import tweepy #https://github.com/tweepy/tweepy
 import csv
 from pymongo import MongoClient
 import json
+from tuiteros import *
 
 client = MongoClient('localhost', 27017)
 db = client['taller3']
@@ -69,9 +70,13 @@ def get_all_tweets(screen_name):
 
 if __name__ == '__main__':
 	#pass in the username of the account you want to download
-	lista_tuiteros = [
-	]
-
+	lista_tuiteros = get_tuiteros()
+	lista_actual = collection_tweets.distinct("user.screen_name")
+	conjunto_actual = set(lista_actual)
+	print lista_actual
 	for tuitero in lista_tuiteros:
-		print "Obteniendo tuis de: "+tuitero
-		get_all_tweets(tuitero)
+		if tuitero in conjunto_actual:
+			print "Username ya esta"
+		else:
+			print "Obteniendo tuits de: " + tuitero
+			get_all_tweets(tuitero)
