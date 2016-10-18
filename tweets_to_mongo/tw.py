@@ -58,7 +58,7 @@ def get_all_tweets(screen_name):
 		#update the id of the oldest tweet less one
 		oldest = alltweets[-1].id - 1
 		
-		#print "...%s tweets downloaded so far" % (len(alltweets))
+		print "...%s tweets downloaded so far" % (len(alltweets))
 	
 	#transform the tweepy tweets into a 2D array that will populate the csv	
 	for tweet in alltweets:
