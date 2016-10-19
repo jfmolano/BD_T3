@@ -1,12 +1,24 @@
 #Tomado de: http://code.runnable.com/Us9rrMiTWf9bAAW3/how-to-stream-data-from-twitter-with-tweepy-for-python
 import tweepy
+from pymongo import MongoClient
 import json
+from tuiteros import *
 
-# Authentication details. To  obtain these visit dev.twitter.com
-consumer_key = ''
-consumer_secret = ''
-access_token = ''
-access_token_secret = ''
+# load from file:
+with open('conf.json', 'r') as f:
+    try:
+        conf = json.load(f)
+    except ValueError:
+        conf = {}
+#Twitter API credentials
+consumer_key = conf["consumer_key"]
+consumer_secret = conf["consumer_secret"]
+access_token = conf["access_key"]
+access_token_secret = conf["access_secret"]
+
+client = MongoClient('localhost', 27017)
+db = client['taller3']
+collection_tweets = db['tweets']
 
 # This is the listener, resposible for receiving data
 class StdOutListener(tweepy.StreamListener):
@@ -17,6 +29,7 @@ class StdOutListener(tweepy.StreamListener):
         # Also, we convert UTF-8 to ASCII ignoring all bad characters sent by users
         print '@%s: %s' % (decoded['user']['screen_name'], decoded['text'].encode('ascii', 'ignore'))
         print ''
+        collection_tweets.insert(decoded)
         return True
 
     def on_error(self, status):
@@ -27,10 +40,13 @@ if __name__ == '__main__':
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
 
-    print "Showing all new tweets for #programming:"
+    print "Showing all new tweets for :"
 
     # There are different kinds of streams: public stream, user stream, multi-user streams
     # In this example follow #programming tag
     # For more details refer to https://dev.twitter.com/docs/streaming-apis
     stream = tweepy.Stream(auth, l)
-    stream.filter(track=['paz'])
+    lista_filtro = ['paz','impuestos']
+    lista_tuiteros = get_tuiteros()
+    lista_filtro = lista_filtro + lista_tuiteros
+    stream.filter(track=lista_filtro)
