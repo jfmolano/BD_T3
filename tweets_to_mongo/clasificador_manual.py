@@ -14,7 +14,7 @@ print cursor
 while True:
 	texto = cursor[randint(0,cuenta)]["text"]
 	print texto
-	polaridad = raw_input("Polaridad: ")
+	polaridad = raw_input("")
 	if polaridad == "s":
 		collection_clasificador.insert({"text":texto,"sentiment":"positive"})
 	if polaridad == "n":
