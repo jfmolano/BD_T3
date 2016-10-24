@@ -1,0 +1,33 @@
+db.getCollection('tweets').aggregate([
+                     { $group: { 
+                         _id: "$user.screen_name", 
+                         total: { $sum: 1 },
+                         promedio_RT: { $avg: "$retweet_count" },
+                         promedio_seguidores: { $avg: "$user.followers_count" }
+                         } },
+                     { $sort: { total: -1 } }
+                   ])
+
+db.getCollection('tweets').aggregate([
+                     { $group: { 
+                         _id: "$user.screen_name", 
+                         total: { $sum: 1 },
+                         promedio_RT: { $avg: "$retweet_count" },
+                         promedio_tuits: { $avg: "$user.statuses_count" }
+                         } },
+                     { $sort: { total: -1 } }
+                   ])
+
+db.getCollection('tweets').aggregate([
+                     { $group: { 
+                         _id: "$user.screen_name", 
+                         total: { $sum: 1 },
+                         promedio_favs: { $avg: "$user.favourites_count" },
+                         promedio_faveado: { $avg: "$favorite_count" }
+                         } },
+                     { $sort: { total: -1 } }
+                   ])
+
+
+
+
