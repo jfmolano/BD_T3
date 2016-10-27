@@ -4,14 +4,46 @@
         <title>Hello jQuery</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="js/hello.js"></script>
+        <style>
+        table {
+            border-collapse: collapse;
+            width: 70%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even){background-color: #f2f2f2}
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        </style>
     </head>
 
     <body>
         <div>
-            <select id="selector" multiple="multiple" name="languages[]">
+            <select id="selector_consulta_1" multiple="multiple" name="languages[]">
             </select>
-            <p>Resultado <span id = "resultado_text">.</span></p>
-            <input id = "Get" type="submit" value="Consulta"/>
+            <table>
+            <tr><th>Seguidores</th><th>Promedio de retweets</th><th>Relaci&oacuten RT/Seguidores</th></tr>
+            <tr>
+            <td id = "resultado_1_consulta_1"></td>
+            <td id = "resultado_2_consulta_1"></td>
+            <td id = "resultado_3_consulta_1"></td>
+            </tr>
+
+            <table>
+            <tr><th>Tweets</th><th>Promedio de retweets</th><th>Relaci&oacuten RT/Tweets</th></tr>
+            <tr>
+            <td id = "resultado_1_consulta_2"></td>
+            <td id = "resultado_2_consulta_2"></td>
+            <td id = "resultado_3_consulta_2"></td>
+            </tr>
+            <!--<p>Resultado <span id = "resultado_text">.</span></p>-->
         </div>
     </body>
 </html>

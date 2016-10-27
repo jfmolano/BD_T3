@@ -70,9 +70,9 @@ def consulta1():
 	objeto = {}
 	for i in l:
 		item = {}
-		item["promedio_RT"] = i["promedio_RT"]
-		item["promedio_seguidores"] = i["promedio_seguidores"]
-		item["relacion"] = i["promedio_RT"]/(i["promedio_seguidores"]+0.0)
+		item["promedio_RT"] = '%.2f' % i["promedio_RT"]
+		item["promedio_seguidores"] = '%.2f' % i["promedio_seguidores"]
+		item["relacion"] = (i["promedio_RT"]/(i["promedio_seguidores"]+0.0))
 		objeto[i["_id"]] = item
 		lista_nombres.append(i["_id"])
 
@@ -93,7 +93,17 @@ def consulta2():
                    ])
 	#resultado = tweets_collection.find()
 	l = list(resultado)
-	return dumps(l), 201
+	lista_nombres = []
+	objeto = {}
+	for i in l:
+		item = {}
+		item["promedio_RT"] = '%.2f' % i["promedio_RT"]
+		item["promedio_tuits"] = '%.2f' % i["promedio_tuits"]
+		item["relacion"] = (i["promedio_RT"]/(i["promedio_tuits"]+0.0))
+		objeto[i["_id"]] = item
+		lista_nombres.append(i["_id"])
+
+	return dumps({"objeto":objeto,"lista":lista_nombres}), 201
 
 @app.route('/consulta3', methods=['GET'])
 def consulta3():
@@ -110,7 +120,17 @@ def consulta3():
                    ])
 	#resultado = tweets_collection.find()
 	l = list(resultado)
-	return dumps(l), 201
+	lista_nombres = []
+	objeto = {}
+	for i in l:
+		item = {}
+		item["promedio_favs"] = '%.2f' % i["promedio_favs"]
+		item["promedio_faveado"] = '%.2f' % i["promedio_faveado"]
+		item["relacion"] = (i["promedio_faveado"]/(i["promedio_favs"]+0.0))
+		objeto[i["_id"]] = item
+		lista_nombres.append(i["_id"])
+
+	return dumps({"objeto":objeto,"lista":lista_nombres}), 201
 
 @app.errorhandler(404)
 def not_found(error):

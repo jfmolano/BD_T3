@@ -1,12 +1,12 @@
 $(document).ready(function() {
     lista = []
     objeto_consulta1 = {}
+    objeto_consulta2 = {}
 
-     url_get = "http://localhost:8080/consulta1"
-        console.log(url_get)
+     url_get_consulta1 = "http://localhost:8080/consulta1"
         $.ajax({
         type: "GET",
-        url: url_get
+        url: url_get_consulta1
         }).then(function(data) {
             var data_json = JSON.parse(data)
             console.log("data: ")
@@ -14,48 +14,38 @@ $(document).ready(function() {
             lista = data_json.lista
             objeto_consulta1 = data_json.objeto
         $.each(lista, function (i, item) {
-            $('#selector').append($('<option>', { 
+            $('#selector_consulta_1').append($('<option>', { 
                 value: item,
                 text : item 
             }));
         });
     });
 
-    $( "#selector" )
+    url_get_consulta2 = "http://localhost:8080/consulta2"
+        $.ajax({
+        type: "GET",
+        url: url_get_consulta2
+        }).then(function(data) {
+            var data_json = JSON.parse(data)
+            console.log("data: ")
+            console.log(data_json)
+            objeto_consulta2 = data_json.objeto
+    });
+
+    $( "#selector_consulta_1" )
     .change(function () {
     var str = "";
     $( "select option:selected" ).each(function() {
       str += $( this ).text() + " ";
     });
     str = str.replace(/\s/g, '');
-    $( "#resultado_text" ).text( JSON.stringify(objeto_consulta1[str]) );
+    $( "#resultado_1_consulta_1" ).text( /*JSON.stringify(*/objeto_consulta1[str].promedio_seguidores/*)*/ );
+    $( "#resultado_2_consulta_1" ).text( /*JSON.stringify(*/objeto_consulta1[str].promedio_RT/*)*/ );
+    $( "#resultado_3_consulta_1" ).text( /*JSON.stringify(*/objeto_consulta1[str].relacion/*)*/ );
+    $( "#resultado_1_consulta_2" ).text( /*JSON.stringify(*/objeto_consulta2[str].promedio_tuits/*)*/ );
+    $( "#resultado_2_consulta_2" ).text( /*JSON.stringify(*/objeto_consulta2[str].promedio_RT/*)*/ );
+    $( "#resultado_3_consulta_2" ).text( /*JSON.stringify(*/objeto_consulta2[str].relacion/*)*/ );
   })
   .change();
 
-    $("#Get").click(function(){
-        console.log(objeto_consulta1)
-    });
-
-    $("#Suma").click(function(){
-        console.log("Suma")
-        var A = $('#txt_A').val();
-        var B = $('#txt_B').val();
-        console.log("A " + A)
-        console.log("B " + B)
-        url_post = "http://localhost:5000/api/suma"
-	var jsonData = "{\"A\":\""+A+"\",\"B\":\""+B+"\"}";
-        console.log(url_post)
-        console.log("JSON: "+jsonData)
-        $.ajax({
-	type: "POST",
-  	data: jsonData,
-    	contentType: "application/json; charset=utf-8",
-  	dataType: "json",
-        url: url_post
-        }).then(function(data) {
-            console.log("data: " + data)
-	    console.log("data " + data.marca)
-       $('#resultado_text').text(data);
-    });
-    });
 });
