@@ -66,7 +66,17 @@ def consulta1():
                    ])
 	#resultado = tweets_collection.find()
 	l = list(resultado)
-	return dumps(l), 201
+	lista_nombres = []
+	objeto = {}
+	for i in l:
+		item = {}
+		item["promedio_RT"] = i["promedio_RT"]
+		item["promedio_seguidores"] = i["promedio_seguidores"]
+		item["relacion"] = i["promedio_RT"]/(i["promedio_seguidores"]+0.0)
+		objeto[i["_id"]] = item
+		lista_nombres.append(i["_id"])
+
+	return dumps({"objeto":objeto,"lista":lista_nombres}), 201
 
 @app.route('/consulta2', methods=['GET'])
 def consulta2():
