@@ -26,9 +26,11 @@
 
     <body>
         <div>
+            <div id="estatico" style="position: fixed;top: 0px;background-color: white;width: 70%;">
             <select id="selector_consulta_1" multiple="multiple" name="languages[]">
             </select>
-            <h1 id="titulo_tuitero">Tuitero</h1> 
+            <h1 id="titulo_tuitero">Tuitero</h1></div>
+            <div id="no estatico" style="top: 150px;position: relative;z-index: -1;">
             <table>
             <tr><th style="width:30%">Seguidores</th><th style="width:30%">Promedio de retweets</th><th style="width:30%">Relaci&oacuten: RT/Seguidores</th></tr>
             <tr>
@@ -62,7 +64,7 @@
             <th style="width:40%">Tweet</th>
             <th style="width:15%">Retweets</th>
             <th style="width:15%">Seguidores</th>
-            <th style="width:15%">Delta</th></tr></table></div>
+            <th style="width:15%">Delta</th></tr></table>
             <br><br><br>
             <table id = "tabla_robots"><tr>
             <th style="width:10%"></th>
@@ -75,6 +77,6 @@
             <td id = "resultado_robots_cantidad"></td>
             <td id = "resultado_robots_fecha"></td>
             </tr>
-            </table></div>
+            </table></div></div>
     </body>
 </html>
