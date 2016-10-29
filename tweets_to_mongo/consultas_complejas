@@ -28,6 +28,15 @@ db.getCollection('tweets').aggregate([
                      { $sort: { total: -1 } }
                    ])
 
+db.getCollection('tweets').aggregate([
+                     { $match: {"text" : {"$regex" : ".*@JuanManSantos.*"},"user.followers_count":{ "$lt": 1000 }}},
+                     { $group: { 
+                         _id: {"user":"$user.screen_name","hora":{ $hour: "$fecha" },"mes":{ $month: "$fecha" },"dia":{ $dayOfMonth: "$fecha" },"ano":{ $year: "$fecha" }}, 
+                         total: { $sum: 1 }
+                         } },
+                     { $sort: { "total": -1 } }
+                   ])
+
 
 
 
