@@ -4,6 +4,7 @@ $(document).ready(function() {
     objeto_consulta2 = {}
     objeto_consulta3 = {}
     objeto_consulta_seguidores = {}
+    objeto_consulta_robots = {}
 
      url_get_consulta1 = "http://localhost:8080/consulta1"
         $.ajax({
@@ -56,6 +57,17 @@ $(document).ready(function() {
             objeto_consulta_seguidores = data_json[0]
     });
 
+    url_get_consulta_robots = "http://localhost:8080/consulta_robots"
+        $.ajax({
+        type: "GET",
+        url: url_get_consulta_robots
+        }).then(function(data) {
+            var data_json = JSON.parse(data)
+            console.log("data consulta robots: ")
+            console.log(data_json)
+            objeto_consulta_robots = data_json[0]
+    });
+
     $( "#selector_consulta_1" )
     .change(function () {
         var str = "";
@@ -73,6 +85,11 @@ $(document).ready(function() {
         $( "#resultado_1_consulta_3" ).text( /*JSON.stringify(*/objeto_consulta3[str].promedio_faveado/*)*/ );
         $( "#resultado_2_consulta_3" ).text( /*JSON.stringify(*/objeto_consulta3[str].promedio_favs/*)*/ );
         $( "#resultado_3_consulta_3" ).text( /*JSON.stringify(*/objeto_consulta3[str].relacion/*)*/ );
+        $( "#resultado_robots_imagen img" ).remove();
+        $( "#resultado_robots_imagen" ).append( /*JSON.stringify(*/"<img src=\""+objeto_consulta_robots[str].imagen+"\">"/*)*/ );
+        $( "#resultado_robots_cuenta" ).text( /*JSON.stringify(*/objeto_consulta_robots[str].cuenta/*)*/ );
+        $( "#resultado_robots_cantidad" ).text( /*JSON.stringify(*/objeto_consulta_robots[str].num_tweets/*)*/ );
+        $( "#resultado_robots_fecha" ).text( /*JSON.stringify(*/objeto_consulta_robots[str].fecha/*)*/ );
         console.log(objeto_consulta_seguidores)
         console.log(objeto_consulta_seguidores[str])
         $('#tabla_resultados tr').not(':first').remove();
