@@ -1,0 +1,1 @@
+db.getCollection('word_count').find({"_id.usuario":"AlvaroUribeVel"}).sort({"value":-1})
