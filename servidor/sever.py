@@ -12,6 +12,7 @@ MONGODB_DB = "taller3"
 TWEETS_COLLECTION = "tweets"
 CONSULTA_SEG = "consulta_seguidores"
 CONSULTA_ROB = "consulta_robots"
+CONSULTAS_PALABRAS_US = "consulta_palabras_usuario"
 
 
 connection = MongoClient(MONGODB_SERVER, MONGODB_PORT)
@@ -19,6 +20,7 @@ db = connection[MONGODB_DB]
 tweets_collection = db[TWEETS_COLLECTION]
 seguidores_collection = db[CONSULTA_SEG]
 robots_collection = db[CONSULTA_ROB]
+palabras_objeto_collection = db[CONSULTAS_PALABRAS_US]
 
 app = Flask(__name__)
 CORS(app)
@@ -76,7 +78,7 @@ def consulta1():
 	for i in l:
 		item = {}
 		item["promedio_RT"] = '%.2f' % i["promedio_RT"]
-		item["promedio_seguidores"] = '%.2f' % i["promedio_seguidores"]
+		item["promedio_seguidores"] = int(i["promedio_seguidores"])
 		item["relacion"] = (i["promedio_RT"]/(i["promedio_seguidores"]+0.0))
 		objeto[i["_id"]] = item
 		lista_nombres.append(i["_id"])
@@ -129,7 +131,7 @@ def consulta3():
 	objeto = {}
 	for i in l:
 		item = {}
-		item["promedio_favs"] = '%.2f' % i["promedio_favs"]
+		item["promedio_favs"] = int(i["promedio_favs"])
 		item["promedio_faveado"] = '%.2f' % i["promedio_faveado"]
 		item["relacion"] = (i["promedio_faveado"]/(i["promedio_favs"]+0.0))
 		objeto[i["_id"]] = item
@@ -148,6 +150,13 @@ def consulta_seguidores():
 def consulta_robots():
 	print "Entra a servicio"
 	resultado = robots_collection.find()
+	l = list(resultado)
+	return dumps(l), 201
+
+@app.route('/consulta_palabras_usuarios', methods=['GET'])
+def consulta_palabras_usuarios():
+	print "Entra a servicio"
+	resultado = palabras_objeto_collection.find()
 	l = list(resultado)
 	return dumps(l), 201
 

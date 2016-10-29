@@ -1,5 +1,6 @@
 var map = function() {  
     lista_no_relevante = ["a",
+    "alguien",
     "además",
     "ahora",
     "al",
@@ -60,6 +61,7 @@ var map = function() {
     "estas",
     "este",
     "esto",
+    "estoy",
     "estos",
     "forma",
     "fue",
@@ -151,6 +153,7 @@ var map = function() {
     "sobre",
     "solo",
     "son",
+    "soy",
     "su",
     "sus",
     "tal",
