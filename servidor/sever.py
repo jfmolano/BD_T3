@@ -11,12 +11,14 @@ MONGODB_PORT = 27017
 MONGODB_DB = "taller3"
 TWEETS_COLLECTION = "tweets"
 CONSULTA_SEG = "consulta_seguidores"
+CONSULTA_ROB = "consulta_robots"
 
 
 connection = MongoClient(MONGODB_SERVER, MONGODB_PORT)
 db = connection[MONGODB_DB]
 tweets_collection = db[TWEETS_COLLECTION]
 seguidores_collection = db[CONSULTA_SEG]
+robots_collection = db[CONSULTA_ROB]
 
 app = Flask(__name__)
 CORS(app)
@@ -139,6 +141,13 @@ def consulta3():
 def consulta_seguidores():
 	print "Entra a servicio"
 	resultado = seguidores_collection.find()
+	l = list(resultado)
+	return dumps(l), 201
+
+@app.route('/consulta_robots', methods=['GET'])
+def consulta_robots():
+	print "Entra a servicio"
+	resultado = robots_collection.find()
 	l = list(resultado)
 	return dumps(l), 201
 
