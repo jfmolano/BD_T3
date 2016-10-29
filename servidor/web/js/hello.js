@@ -5,6 +5,7 @@ $(document).ready(function() {
     objeto_consulta3 = {}
     objeto_consulta_seguidores = {}
     objeto_consulta_robots = {}
+    objeto_consulta_palabra_usuarios = {}
 
      url_get_consulta1 = "http://localhost:8080/consulta1"
         $.ajax({
@@ -68,6 +69,17 @@ $(document).ready(function() {
             objeto_consulta_robots = data_json[0]
     });
 
+    url_get_consulta_palabras_usuarios = "http://localhost:8080/consulta_palabras_usuarios"
+        $.ajax({
+        type: "GET",
+        url: url_get_consulta_palabras_usuarios
+        }).then(function(data) {
+            var data_json = JSON.parse(data)
+            console.log("data consulta robots: ")
+            console.log(data_json)
+            objeto_consulta_palabra_usuarios = data_json[0]
+    });
+
     $( "#selector_consulta_1" )
     .change(function () {
         var str = "";
@@ -96,6 +108,11 @@ $(document).ready(function() {
         $.each(objeto_consulta_seguidores[str], function (i, item) {
                 console.log(item)
                 $('#tabla_resultados').append("<tr><td>"+item['fecha']+"</td><td>"+item['tweet']+"</td><td>"+item['retweets']+"</td><td>"+item['seguidores']+"</td><td>"+item['delta']+"</td></tr>");
+            });
+        $('#tabla_palabras_usuarios tr').not(':first').remove();
+        $.each(objeto_consulta_palabra_usuarios[str], function (i, item) {
+                console.log(item)
+                $('#tabla_palabras_usuarios').append("<tr><td>"+item['palabra']+"</td><td>"+item['cuenta']+"</td></tr>");
             });
   })
   .change();
