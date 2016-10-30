@@ -13,6 +13,7 @@ TWEETS_COLLECTION = "tweets"
 CONSULTA_SEG = "consulta_seguidores"
 CONSULTA_ROB = "consulta_robots"
 CONSULTAS_PALABRAS_US = "consulta_palabras_usuario"
+CONSULTAS_WC_COLOMBIA = "word_count_colombia"
 
 
 connection = MongoClient(MONGODB_SERVER, MONGODB_PORT)
@@ -21,6 +22,7 @@ tweets_collection = db[TWEETS_COLLECTION]
 seguidores_collection = db[CONSULTA_SEG]
 robots_collection = db[CONSULTA_ROB]
 palabras_objeto_collection = db[CONSULTAS_PALABRAS_US]
+wc_colombia_collection = db[CONSULTAS_WC_COLOMBIA]
 
 app = Flask(__name__)
 CORS(app)
@@ -157,6 +159,13 @@ def consulta_robots():
 def consulta_palabras_usuarios():
 	print "Entra a servicio"
 	resultado = palabras_objeto_collection.find()
+	l = list(resultado)
+	return dumps(l), 201
+
+@app.route('/consulta_palabras_colombia', methods=['GET'])
+def consulta_palabras_colombia():
+	print "Entra a servicio"
+	resultado = wc_colombia_collection.find().sort("value",-1).limit(7)
 	l = list(resultado)
 	return dumps(l), 201
 

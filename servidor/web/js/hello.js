@@ -80,6 +80,20 @@ $(document).ready(function() {
             objeto_consulta_palabra_usuarios = data_json[0]
     });
 
+    url_get_consulta_palabras_colombia = "http://localhost:8080/consulta_palabras_colombia"
+        $.ajax({
+        type: "GET",
+        url: url_get_consulta_palabras_colombia
+        }).then(function(data) {
+            var data_json = JSON.parse(data)
+            console.log("data consulta Colombia: ")
+            console.log(data_json)
+            $.each(data_json, function (i, item) {
+                console.log(item)
+                $('#tabla_palabras_colombia').append("<tr><td>"+item['_id']['palabra']+"</td><td>"+item['value']+"</td></tr>");
+            });
+    });
+
     $( "#selector_consulta_1" )
     .change(function () {
         var str = "";
