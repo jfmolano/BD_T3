@@ -17,5 +17,7 @@ while True:
 	polaridad = raw_input("")
 	if polaridad == "s":
 		collection_clasificador.insert({"text":texto,"sentiment":"positive"})
-	if polaridad == "n":
+	elif polaridad == "n":
 		collection_clasificador.insert({"text":texto,"sentiment":"negative"})
+	else:
+		collection_clasificador.insert({"text":texto,"sentiment":"neutral"})
