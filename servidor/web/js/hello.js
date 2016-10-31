@@ -132,6 +132,34 @@ $(document).ready(function() {
             //$('#tg_container').append("<span style=\"font-size:100%;\">Meili</span>");
     });
 
+    url_get_consulta_palabras_ht = "http://localhost:8080/consulta_ht_personas"
+        $.ajax({
+        type: "GET",
+        url: url_get_consulta_palabras_ht
+        }).then(function(data) {
+            var data_json = JSON.parse(data)
+            console.log("data consulta Colombia: ")
+            console.log(data_json)
+            $.each(data_json, function (i, item) {
+                console.log(item)
+                $('#tabla_ht_personas').append("<tr><td>#"+item['_id']['ht']+"</td><td>"+item['_id']['usuario']+"</td><td>"+item['value']+"</td></tr>");
+            });
+    });
+
+    url_get_consulta_lugares_ht = "http://localhost:8080/consulta_ht_lugares"
+        $.ajax({
+        type: "GET",
+        url: url_get_consulta_lugares_ht
+        }).then(function(data) {
+            var data_json = JSON.parse(data)
+            console.log("data consulta Colombia: ")
+            console.log(data_json)
+            $.each(data_json, function (i, item) {
+                console.log(item)
+                $('#tabla_ht_lugares').append("<tr><td>#"+item['_id']['ht']+"</td><td>"+item['_id']['lugar']+"</td><td>"+item['value']+"</td></tr>");
+            });
+    });
+
     $( "#selector_consulta_1" )
     .change(function () {
         var str = "";
