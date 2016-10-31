@@ -6,6 +6,26 @@ $(document).ready(function() {
     objeto_consulta_seguidores = {}
     objeto_consulta_robots = {}
     objeto_consulta_palabra_usuarios = {}
+    lista_ht_sentimientos = []
+
+    function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    }
 
      url_get_consulta1 = "http://localhost:8080/consulta1"
         $.ajax({
@@ -92,6 +112,24 @@ $(document).ready(function() {
                 console.log(item)
                 $('#tabla_palabras_colombia').append("<tr><td>"+item['_id']['palabra']+"</td><td>"+item['value']+"</td></tr>");
             });
+    });
+
+    url_get_consulta_ht_sentimientos = "http://localhost:8080/consulta_ht_sentimientos"
+        $.ajax({
+        type: "GET",
+        url: url_get_consulta_ht_sentimientos
+        }).then(function(data) {
+            var data_json = JSON.parse(data)
+            console.log("data consulta lista_ht_sentimientos: ")
+            console.log(data_json)
+            data_json = shuffle(data_json)
+            $.each(data_json, function (i, item) {
+                var tam = item.value.neg + item.value.pos + item.value.neu
+                if (tam>180){tam = 180}
+                if (tam<20){tam = 20}
+                $('#tg_container').append("<span style=\"font-size:"+tam+"%;\">"+"[#"+item._id.ht+" &#128513("+item.value.pos+")"+" &#128529("+item.value.neu+")"+" &#128545("+item.value.neg+")] "+"</span>");
+            });
+            //$('#tg_container').append("<span style=\"font-size:100%;\">Meili</span>");
     });
 
     $( "#selector_consulta_1" )
