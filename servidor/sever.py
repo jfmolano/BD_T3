@@ -14,6 +14,9 @@ CONSULTA_SEG = "consulta_seguidores"
 CONSULTA_ROB = "consulta_robots"
 CONSULTAS_PALABRAS_US = "consulta_palabras_usuario"
 CONSULTAS_WC_COLOMBIA = "word_count_colombia"
+CONSULTAS_HT_SENTIMIENTO = "ht_sentimientos"
+CONSULTAS_HT_PERSONA = "ht_persona"
+CONSULTAS_HT_LUGAR = "ht_lugares"
 
 
 connection = MongoClient(MONGODB_SERVER, MONGODB_PORT)
@@ -23,6 +26,10 @@ seguidores_collection = db[CONSULTA_SEG]
 robots_collection = db[CONSULTA_ROB]
 palabras_objeto_collection = db[CONSULTAS_PALABRAS_US]
 wc_colombia_collection = db[CONSULTAS_WC_COLOMBIA]
+ht_sent_collection = db[CONSULTAS_HT_SENTIMIENTO]
+ht_pers_collection = db[CONSULTAS_HT_PERSONA]
+ht_luga_collection = db[CONSULTAS_HT_LUGAR]
+
 
 app = Flask(__name__)
 CORS(app)
@@ -166,6 +173,27 @@ def consulta_palabras_usuarios():
 def consulta_palabras_colombia():
 	print "Entra a servicio"
 	resultado = wc_colombia_collection.find().sort("value",-1).limit(7)
+	l = list(resultado)
+	return dumps(l), 201
+
+@app.route('/consulta_ht_sentimientos', methods=['GET'])
+def consulta_ht_sentimientos():
+	print "Entra a servicio"
+	resultado = ht_sent_collection.find().sort("value.neg",-1).limit(100)
+	l = list(resultado)
+	return dumps(l), 201
+
+@app.route('/consulta_ht_personas', methods=['GET'])
+def consulta_ht_personas():
+	print "Entra a servicio"
+	resultado = ht_pers_collection.find().sort("value",-1).limit(10)
+	l = list(resultado)
+	return dumps(l), 201
+
+@app.route('/consulta_ht_lugares', methods=['GET'])
+def consulta_ht_lugares():
+	print "Entra a servicio"
+	resultado = ht_luga_collection.find().sort("value",-1).limit(10)
 	l = list(resultado)
 	return dumps(l), 201
 

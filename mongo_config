@@ -1,0 +1,40 @@
+[bigdata2@clusterbigdata-37 ~]$ mongo clusterbigdata-57.virtual.uniandes.edu.co
+MongoDB shell version: 3.2.10
+connecting to: clusterbigdata-57.virtual.uniandes.edu.co/test
+Server has startup warnings: 
+2016-10-15T09:33:11.797-0500 I CONTROL  [main] ** WARNING: You are running this process as the root user, which is not recommended.
+2016-10-15T09:33:11.797-0500 I CONTROL  [main] 
+mongos> sh.status()
+--- Sharding Status --- 
+  sharding version: {
+	"_id" : 1,
+	"minCompatibleVersion" : 5,
+	"currentVersion" : 6,
+	"clusterId" : ObjectId("58023ad2b62133a9b5db9ec7")
+}
+  shards:
+	{  "_id" : "shard0000",  "host" : "clusterbigdata-59.virtual.uniandes.edu.co:27017" }
+	{  "_id" : "shard0001",  "host" : "clusterbigdata-60.virtual.uniandes.edu.co:27017" }
+	{  "_id" : "shard0002",  "host" : "clusterbigdata-62.virtual.uniandes.edu.co:27017" }
+	{  "_id" : "shard0003",  "host" : "clusterbigdata-64.virtual.uniandes.edu.co:27017" }
+  most recently active mongoses:
+	"3.2.10" : 1
+  balancer:
+	Currently enabled:  yes
+	Currently running:  yes
+		Balancer lock taken at Thu Oct 27 2016 15:51:58 GMT-0500 (COT) by clusterbigdata-57:27017:1476541991:1152978477:Balancer
+	Failed balancer rounds in last 5 attempts:  0
+	Migration Results for the last 24 hours: 
+		No recent migrations
+  databases:
+	{  "_id" : "movies",  "primary" : "shard0000",  "partitioned" : true }
+		movies.movie
+			shard key: { "title" : 1 }
+			unique: false
+			balancing: true
+			chunks:
+				shard0000	1
+			{ "title" : { "$minKey" : 1 } } -->> { "title" : { "$maxKey" : 1 } } on : shard0000 Timestamp(1, 0) 
+	{  "_id" : "grupo14",  "primary" : "shard0001",  "partitioned" : false }
+	{  "_id" : "grupo15",  "primary" : "shard0002",  "partitioned" : false }
+
